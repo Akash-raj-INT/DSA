@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+
+using namespace std;
+
+void topologicalSort(int vertex, vector<vector<int>>& graph, vector<bool>& visited, stack<int>& order) {
+    visited[vertex] = true;
+    for (int neighbor : graph[vertex]) {
+        if (!visited[neighbor]) {
+            topologicalSort(neighbor, graph, visited, order);
+        }
+    }
+    order.push(vertex);
+}
+
+int longestPathDAG(vector<vector<int>>& graph, int n) {
+    vector<bool> visited(n, false);
+    stack<int> order;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            topologicalSort(i, graph, visited, order);
+        }
+    }
+
+    vector<int> longestPath(n, 0);
+
+    while (!order.empty()) {
+        int current = order.top();
+        order.pop();
+
+        for (int neighbor : graph[current]) {
+            longestPath[neighbor] = max(longestPath[neighbor], longestPath[current] + 1);
+        }
+    }
+
+    return *max_element(longestPath.begin(), longestPath.end());
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> graph(n);
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u - 1].push_back(v - 1);
+    }
+
+    int longestPath = longestPathDAG(graph, n);
+    cout << longestPath << endl;
+
+    return 0;
+}
