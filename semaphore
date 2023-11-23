@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+typedef int Semaphore;
+
+void initSemaphore(Semaphore *s, int initialValue) {
+    *s = initialValue;
+}
+
+void P(Semaphore *s) {
+    while (*s <= 0) {
+        // Wait or yield, depending on your context
+        usleep(100); // Sleeping for a short time as a placeholder
+    }
+    (*s)--;
+}
+
+void V(Semaphore *s) {
+    (*s)++;
+}
+
+void* threadFunction(void* arg) {
+    Semaphore* sem = (Semaphore*)arg;
+
+    P(sem);
+
+    // Critical Section
+    printf("Thread %ld in critical section.\n", pthread_self());
+    sleep(2); // Simulating some work in the critical section
+    printf("Thread %ld exiting critical section.\n", pthread_self());
+
+    V(sem);
+
+    pthread_exit(NULL);
+}
+
+int main() {
+    printf("This is Hemish!!\n");
+
+    Semaphore sem;
+    initSemaphore(&sem, 1);
+
+    pthread_t threads[3];
+
+    for (int i = 0; i < 3; ++i) {
+        pthread_create(&threads[i], NULL, threadFunction, (void*)&sem);
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        pthread_join(threads[i], NULL);
+    }
+
+    return 0;
+}
