@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+signed main() {
+ 
+    int n , a ;
+    cin>>n>>a;
+    
+    vector<int>v(n); // ignore 
+    for(auto & i:v)cin>>i;
+    
+    int ans =0;
+    a--;
+    if(v[a] == 1){
+        ans++;
+    }
+    int start = a-1, end=a+1;
+    while( start >= 0 && end < n){
+        if(v[start] == 1 && v[end] == 1){
+            ans+=2;
+        }
+        start--;
+        end++;
+    }
+    while(start >= 0){
+        if(v[start] == 1){
+            ans++;
+        }
+        start--;
+    }
+    while(end < n){
+        if(v[end] == 1){
+            ans++;
+        }
+        end++;
+    }
+    
+    cout<<ans<<endl;
+    return 0;
+}
