@@ -1,0 +1,23 @@
+class Solution {
+public:
+
+    vector<vector<int>> ans;
+    void generate(int index, vector<int> & candidates, int target, vector<int> &cs){
+        if(target == 0){
+            ans.push_back(cs);
+            return;
+        }
+        if(target < 0) return;
+        if(index == candidates.size()) return;
+        cs.push_back(candidates[index]);
+        generate(index, candidates, target - candidates[index], cs);
+        cs.pop_back();
+        generate(index + 1, candidates, target, cs);
+        return;
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> cs;
+        generate(0, candidates, target, cs);
+        return ans;
+    }
+};
