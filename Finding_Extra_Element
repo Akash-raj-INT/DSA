@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// observation 1 -> till one point we are having good alignment of elements
+// one point breaks the flow and we need that point
+// pushing extra element in original -> we need check if extra[m] == origin[m] -> don't have extra element  -> we cannot directly check and would require to check out of bounds also
+// input both arrays and push extra element
+// if origin[mid] == extra[mid] -> s = mid+1
+// else -> e = mid;
+// start and end converged
+
+int main() {
+        // your code goes here
+    int n;
+    cin>>n;
+    vector<int> origin(n);
+    vector<int> extra(n);
+    for(int i =0;i<n;i++){
+        cin>>origin[i];
+    }
+    origin.push_back(INT_MAX);
+    for(int i =0;i<n+1;i++){
+        cin>>extra[i];
+    }
+    
+    int s = 0, e = n;
+    
+    while(s < e){
+        int m = s + (e-s)/2;
+        if(origin[m] == extra[m]){
+            s = m + 1;
+        }else{
+            e = m;
+        }
+    }
+    cout<<e<<endl;
+    
+}
+
+
