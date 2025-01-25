@@ -1,0 +1,18 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+        // your code goes here
+    // unordered_map<int,int>// dt1 -> data type of key dt2 -> datatype of value
+    unordered_map<string,int> m;
+    m["Ind"] = 3;
+    m["Aus"] = 5;
+    // want to check if an element exists in the map
+    string val = "Ind";
+    if(m.find(val) == m.end()){
+        cout<<" THIS element is not in the map";
+    }else{
+        cout<< "element is present with value: "<< m[val];
+        
+    }
+}
