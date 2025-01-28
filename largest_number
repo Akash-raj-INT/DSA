@@ -1,0 +1,22 @@
+class Solution {
+public:
+ static bool comparator (string a, string b){
+            return a+b > b+a;
+        }
+    string largestNumber(vector<int>& nums) {
+       
+        vector<string> s;
+        for(int i: nums){
+            s.push_back(to_string(i));
+        }
+        sort(s.begin(), s.end(), comparator);
+
+        string ans="";
+
+        for( auto x: s){
+            ans+=x;
+        }
+        if(s[0]=="0") return "0";
+        return ans;
+    }
+};
