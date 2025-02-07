@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+class Que {
+    int head, tail;
+    int arr[1000];
+    
+public:
+    Que() {
+        head = -1;
+        tail = -1;
+    }
+    
+    void push(int data) {
+        if (head == -1) {
+            head++; 
+            tail++;
+            arr[head] = data;
+            return;
+        }
+    }
+
+    void pop() {
+        if (head == -1) {
+            cout << "Empty Q";
+            return;
+        }
+        if (head == tail) {
+            head = -1;
+            tail = -1;
+    
+         } else {
+            head = (head + 1) % 1000;
+        }    
+    }
+
+    int front() {
+        if (head == -1) {
+            return -1;
+        }
+        return arr[head];
+    }    
+
+    int back() {
+        if (head == -1) { 
+            return -1;
+        }
+        return arr[tail];
+    }
+};
+
+int main() {
+    Que q;
+    q.push(10);
+    q.push(20);
+    q.push(30);
+
+    cout << "Front: " << q.front() << endl;
+    cout << "Back: " << q.back() << endl;
+
+    q.pop();
+    cout << "After pop, Front: " << q.front() << endl;
+
+    return 0;
+}
