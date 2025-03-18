@@ -1,0 +1,26 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+void removal_order(int n) {
+    queue<int> q;
+    
+    for (int i = 1; i <= n; i++) {
+        q.push(i);
+    }
+
+    while (!q.empty()) {
+        q.push(q.front());
+        q.pop();
+        cout << q.front() << " ";
+        q.pop();
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    removal_order(n);
+    return 0;
+}
