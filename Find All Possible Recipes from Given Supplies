@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+        vector<string> ans;
+        unordered_map<string, bool> mp;
+        for (auto i : supplies) mp[i] = true;
+        int n = recipes.size();
+        vector<bool> visited(n, false); 
+        bool add = true;
+        while (add) {
+            add = false;
+            for (int i = 0; i < n; i++) {
+                if (visited[i]) continue;
+                bool b = true;
+                for (int j = 0; j < ingredients[i].size(); j++) {
+                    string ing = ingredients[i][j];
+                    if (!mp[ing]) {
+                        b = false;
+                        break;
+                    }
+                }
+                if (b) {
+                    ans.push_back(recipes[i]);
+                    mp[recipes[i]] = true;
+                    visited[i] = true;
+                    add = true;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
